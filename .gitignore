@@ -1,0 +1,13 @@
+
+*.log
+data_quality_dag.py
+validator.py
+venv/*
+jobs/*
+logs/*
+queryex
+Apache_Airflow/logs/*
+*.csv
+*.json
+Apache_Airflow/venv/Include/site/python3.12/greenlet/greenlet.h
+*.pyc
