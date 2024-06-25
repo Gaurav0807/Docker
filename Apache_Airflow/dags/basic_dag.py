@@ -1,37 +1,44 @@
-
-
-from datetime import datetime,timedelta
 from airflow import DAG
+from datetime import datetime,timedelta
 from airflow.operators.dummy_operator import DummyOperator
 from airflow.operators.python_operator import PythonOperator
+from jobs.extract import extract
 
 default_args = {
-	'owner':'Gaurav',
-	'depends_on_past':False,
-	'start_date': datetime(2024,1,6),
-	'retries':1,
-	'retries_delay': timedelta(minutes=5),
+    'owner': 'Gaurav Rawat',
+    'depends_on_past' :False,
+    'start_date': datetime(2024,6,14),
+    'retries':1,
+    'retries_delay': timedelta(minutes=5),
 }
 
 dag = DAG(
-	'Testing',
-	default_args=default_args,
-	description='Simple dag creation',
-	schedule_interval=timedelta(days=1)
+    'Basic_Dag',
+    default_args=default_args,
+    description="Airflow DAG Trigger with Lambda Function",
+    schedule_interval=timedelta(days=1)
+)
+
+start_task = DummyOperator(task_id ="start_task",dag=dag)
+
+def hello():
+    print("Hello Airflow DAG")
+
+
+python_task = PythonOperator(
+    task_id = 'python_task',
+    python_callable=hello,
+    dag=dag,
+)
+
+job_task = PythonOperator(
+    task_id = 'job_task',
+    python_callable=extract,
+    dag=dag,
 )
 
 
-start_task = DummyOperator(task_id='start_task',dag = dag)
 
-def print_hello():
-	print("Hello this is testing airflow_dag")
+end_task = DummyOperator(task_id='end_task',dag=dag)
 
-hey_task = PythonOperator(
-	task_id='hey_task',
-	python_callable=print_hello,
-	dag=dag,
-)
-
-end_task = DummyOperator(task_id='end_task',dag = dag)
-
-start_task >> hey_task >> end_task
+start_task >> python_task >> job_task >> end_task
