@@ -12,8 +12,9 @@ USER airflow
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-RUN pip install apache-airflow-providers-apache-spark
-RUN pip install airflow-provider-great-expectations 
-RUN pip install apache-airflow
-RUN pip install apache-airflow-providers-databricks
+#Only Use when needed
+# RUN pip install apache-airflow-providers-apache-spark
+# RUN pip install airflow-provider-great-expectations 
+# RUN pip install apache-airflow
+# RUN pip install apache-airflow-providers-databricks
 
