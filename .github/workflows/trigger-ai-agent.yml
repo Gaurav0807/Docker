@@ -9,9 +9,9 @@ permissions:
 
 jobs:
   call-agent:
-    if: contains(toJson(github.event.commits), 'ai-blog')
+    if: contains(github.event.head_commit.message, 'ai-blog')
     uses: Gaurav0807/ai-blog-agents/.github/workflows/run-agent.yml@main
     with:
-      target_repo: ${{ github.repository }}
+      target_repo: Gaurav0807/Docker
       target_branch: main
     secrets: inherit
