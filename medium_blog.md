@@ -17,29 +17,41 @@ The architecture consists of several key components:
 - **Apache Airflow**: Orchestrates complex workflows and manages task dependencies.
 - **Kafka**: Though not explicitly shown in the code, it is often used in data pipelines for real-time data streaming.
 
-This architecture is designed to be modular, allowing for easy integration of additional services as needed.
+This architecture is designed to be modular, allowing for easy integration of additional components as the data pipeline evolves.
 
 ## Key Components
 
-1. **Docker Compose**: The `docker-compose.yaml` file defines the services required for the application, including PostgreSQL and pgAdmin for database management.
-2. **Data Ingestion Script**: The `ingestion.py` file generates random employee data and ingests it into the PostgreSQL database.
-3. **Airflow DAGs**: The repository includes several Directed Acyclic Graphs (DAGs) that define various workflows for data processing, including data extraction, quality checks, and task dependencies.
+### 1. Docker
+The backbone of this architecture, Docker enables us to package applications and their dependencies into containers, ensuring they run consistently across different environments.
+
+### 2. PostgreSQL
+This relational database system is used to store the processed data efficiently. It allows for complex queries and data integrity, making it a reliable choice for data storage.
+
+### 3. Apache Airflow
+A powerful workflow orchestration tool, Airflow helps in defining, scheduling, and monitoring workflows. It allows users to create Directed Acyclic Graphs (DAGs) to manage task dependencies seamlessly.
+
+### 4. Kafka
+While not explicitly implemented in the provided code, Kafka is an essential tool for building real-time data pipelines, enabling the ingestion and processing of streaming data.
 
 ## How It Works
 
-1. **Containerization with Docker**: The application is containerized using Docker, allowing developers to run the entire stack locally without worrying about environment inconsistencies.
-   
-2. **Data Generation and Ingestion**: The `ingestion.py` script creates a DataFrame with random employee data, modifies it, and saves it to a CSV file. This data is then ingested into the PostgreSQL database.
-   
-3. **Workflow Orchestration with Airflow**: Airflow manages the execution of tasks defined in the DAGs. Each task can depend on the completion of previous tasks, ensuring a smooth data processing flow.
+The provided codebase outlines a simple data engineering pipeline implemented using Docker and Airflow. Here’s a high-level overview of the process:
+
+1. **Data Ingestion**: The `ingestion.py` script generates random employee data and saves it to a PostgreSQL database. This is done using the `pandas` library to create a DataFrame and the `SQLAlchemy` library to handle database connections.
+
+2. **Workflow Orchestration**: Airflow is set up to manage the workflow of the data processing tasks. The DAGs defined in the `dags` directory handle various tasks, including data extraction, processing, and quality checks.
+
+3. **Task Management**: Each task within the DAG can be monitored, retried, and logged, ensuring that any failures can be handled gracefully.
+
+4. **Data Quality Checks**: The `data_quality_dag.py` file demonstrates how to implement data validation and quality checks, ensuring that only clean and reliable data is processed further.
 
 ## Real-world Use Cases
 
-- **Employee Data Management**: This setup can be used by HR departments to manage employee information, track salaries, and analyze workforce demographics.
-  
-- **Data Quality Checks**: The Airflow DAGs can be extended to include data validation tasks, ensuring that the data ingested into the database meets the required quality standards.
-  
-- **ETL Processes**: The architecture can be adapted for Extract, Transform, Load (ETL) processes, where data is pulled from various sources, transformed, and loaded into a data warehouse.
+- **ETL Pipelines**: This architecture is ideal for building Extract, Transform, Load (ETL) pipelines where data is ingested from various sources, transformed, and then loaded into a data warehouse.
+
+- **Data Warehousing**: With the ability to orchestrate complex workflows and handle large volumes of data, this setup can serve as a foundation for a robust data warehousing solution.
+
+- **Real-time Analytics**: By integrating Kafka, organizations can build pipelines that support real-time data analytics, allowing for timely insights and decision-making.
 
 ## How to Run Locally
 
@@ -47,19 +59,4 @@ To run this project locally, follow these steps:
 
 1. **Clone the Repository**:
    ```bash
-   git clone https://github.com/yourusername/your-repo.git
-   cd your-repo
-   ```
-
-2. **Build and Start Docker Containers**:
-   ```bash
-   docker-compose up --build
-   ```
-
-3. **Access pgAdmin**:
-   Open your browser and navigate to `http://localhost:5050`. Log in with the email `admin@example.com` and password `admin`.
-
-4. **Run Airflow**:
-   Access Airflow by navigating to `http://localhost:6070`. You can trigger the DAGs manually from the Airflow UI.
-
-5. **Check Data in PostgreSQL**:
+   git clone
