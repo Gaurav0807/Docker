@@ -115,9 +115,4 @@ POSTGRES_HOST = "postgres"
 POSTGRES_PORT = "5432"
 POSTGRES_USER = "postgres"
 POSTGRES_PASSWORD = "password"
-
-
-## 🚀 Latest Updates (2026-03-23)
-- Added concurrency configuration to GitHub Actions workflow for better job management.
-- Included a trigger SHA in the GitHub Actions workflow for reference to the specific commit.
-- Commented out pgAdmin service in the Docker Compose file for potential removal or future consideration.
+```
