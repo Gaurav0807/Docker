@@ -116,3 +116,10 @@ POSTGRES_PORT = "5432"
 POSTGRES_USER = "postgres"
 POSTGRES_PASSWORD = "password"
 ```
+
+## 🚀 Latest Updates (2026-03-23)
+- Added pgAdmin service to the Docker Compose configuration
+- Configured pgAdmin with default email and password
+- Exposed pgAdmin on port 6050
+- Established dependency on the postgres service for pgAdmin
+- Connected pgAdmin to the test_network
